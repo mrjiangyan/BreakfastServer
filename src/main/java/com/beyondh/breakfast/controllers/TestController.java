@@ -1,5 +1,6 @@
 package com.beyondh.breakfast.controllers;
 
+import com.ipms.common.DateHelper;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @RequestMapping(method = RequestMethod.GET)
     public Object get() {
-        return "123";
+        return DateHelper.getCurrentTimeString();
     }
 }

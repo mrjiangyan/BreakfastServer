@@ -20,6 +20,7 @@ sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	maven {url "http://192.168.55.106:8081/nexus/content/repositories/IPMS_MVN_UTILS_RELEASE"}
 }
 
 configurations {
@@ -27,6 +28,8 @@ configurations {
 }
 
 dependencies {
+	compile("com.ipms:common:1.0.1")
+	compile("com.ipms:domain:1.0.1")
 	compile('org.springframework.boot:spring-boot-starter-actuator')
 	compile('org.springframework.boot:spring-boot-actuator-docs')
 	compile('org.springframework.boot:spring-boot-starter-aop')
