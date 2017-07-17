@@ -11,11 +11,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.context.annotation.ImportResource;
 
 import java.io.IOException;
 
 @RestController
 @SpringBootApplication
+@ImportResource("application-beans.xml")
 public class BreakfastApplication {
 
 //	@RequestMapping("breakfast")
