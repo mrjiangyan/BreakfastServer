@@ -1,7 +1,7 @@
 package com.beyondh.breakfast.utils;
 
-import com.beyondh.breakfast.model.common.ResultCode;
-import com.beyondh.breakfast.model.common.ResultModel;
+import com.beyondh.breakfast.model.common.ApiResponse;
+import com.beyondh.breakfast.model.common.ApiResponseCode;
 import org.springframework.web.client.RestClientException;
 
 /**
@@ -9,20 +9,21 @@ import org.springframework.web.client.RestClientException;
  */
 public class ExceptionUtils {
 
-    public static <T> ResultModel<T> HandleException(Exception exception, ResultModel<T> returnResult) {
+    public static <T> ApiResponse<T> HandleException(Exception exception, ApiResponse<T> returnResult) {
         try {
             if (exception instanceof IllegalArgumentException) {
-                returnResult = new ResultModel<T>(ResultCode.IllegalArgumentException, exception.getMessage());
+                returnResult.setCode(ApiResponseCode.IllegalArgumentException.getValue());
             } else if (exception instanceof RestClientException) //目前只访问PMS，暂时这样设置
             {
-                returnResult = new ResultModel<T>(ResultCode.PMSException, exception.getMessage());
+                returnResult.setCode(ApiResponseCode.PMSException.getValue());
             } else {
-                returnResult = new ResultModel<T>(ResultCode.OtherException, exception.getMessage());
+                returnResult.setCode(ApiResponseCode.OtherException.getValue());
             }
         } catch (Exception e) {
-            returnResult = new ResultModel<T>(ResultCode.InnerError, exception.getMessage());
+            returnResult.setCode(ApiResponseCode.InnerError.getValue());
         }
 
+        returnResult.setMessage(exception.getMessage());
         return returnResult;
     }
 }

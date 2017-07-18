@@ -2,7 +2,7 @@ package com.beyondh.breakfast.controllers;
 
 import com.beyondh.breakfast.model.auth.User;
 import com.beyondh.breakfast.model.auth.UserEncryptModel;
-import com.beyondh.breakfast.model.common.ResultModel;
+import com.beyondh.breakfast.model.common.ApiResponse;
 import com.beyondh.breakfast.service.AuthService;
 import com.beyondh.breakfast.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,16 @@ public class AuthController extends BaseController {
     private AuthService authService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public @ResponseBody ResultModel<UserEncryptModel> Login(@RequestBody User user) {
-        ResultModel<UserEncryptModel> result = null;
+    @ResponseBody
+    public ApiResponse<UserEncryptModel> Login(@RequestBody User user) {
+        ApiResponse<UserEncryptModel> result = new ApiResponse<>();
+        UserEncryptModel userEncryptModel=null;
         try {
-            UserEncryptModel userEncryptModel = authService.Login(user);
-            result = new ResultModel<UserEncryptModel>(userEncryptModel);
+            userEncryptModel = authService.Login(user);
+            System.out.println("请求成功");
+            result.setData(userEncryptModel);
         } catch (Exception exception) {
-            return ExceptionUtils.HandleException(exception, result);
+            return ExceptionUtils.HandleException(exception,result);
         }
 
         return result;
