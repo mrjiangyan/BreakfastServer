@@ -1,10 +1,10 @@
 package com.beyondh.breakfast.controllers;
 
+import com.beyondh.breakfast.contract.IBreakfastService;
 import com.beyondh.breakfast.model.common.ApiResponse;
 import com.beyondh.breakfast.network.Model.BreakfastInfoModel;
 import com.beyondh.breakfast.network.Model.EatBreakfastModel;
 import com.beyondh.breakfast.network.Model.HotelBreakfastSummaryModel;
-import com.beyondh.breakfast.service.IBreakfastService;
 import com.beyondh.breakfast.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

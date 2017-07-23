@@ -1,5 +1,6 @@
-package com.beyondh.breakfast.service;
+package com.beyondh.breakfast.contractImpl;
 
+import com.beyondh.breakfast.contract.IAuthService;
 import com.beyondh.breakfast.model.auth.User;
 import com.beyondh.breakfast.model.auth.UserEncryptModel;
 import com.beyondh.breakfast.network.PmsRestClient;
@@ -8,19 +9,18 @@ import com.beyondh.breakfast.utils.StringUtils;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 
 /**
- * Created by jliang on 7/17/2017.
+ * Created by jliang on 7/24/2017.
  */
-@Service
-public class AuthService {
+public class AuthService implements IAuthService {
 
     @Autowired
     private PmsRestClient pmsRestClient;
 
+    @Override
     public UserEncryptModel Login(User user) {
         ValidateUser(user);
         UserEncryptModel userEncryptModel = new UserEncryptModel();

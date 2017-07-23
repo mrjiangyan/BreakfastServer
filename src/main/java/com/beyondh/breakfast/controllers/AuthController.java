@@ -1,15 +1,14 @@
 package com.beyondh.breakfast.controllers;
 
+import com.beyondh.breakfast.contract.IAuthService;
 import com.beyondh.breakfast.model.auth.User;
 import com.beyondh.breakfast.model.auth.UserEncryptModel;
 import com.beyondh.breakfast.model.common.ApiResponse;
-import com.beyondh.breakfast.serviceImpl.AuthService;
 import com.beyondh.breakfast.utils.TokenUtils;
 import com.beyondh.breakfast.utils.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthController extends BaseController {
 
     @Autowired
-    private AuthService authService;
+    private IAuthService authService;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
