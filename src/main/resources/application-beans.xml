@@ -5,20 +5,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
                 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:application.properties</value>
-            </list>
-        </property>
-    </bean>
-
     <bean id="requestFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory">
         <property name="readTimeout" value="60000"/>
         <property name="connectTimeout" value="10000"/>
     </bean>
-
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
         <constructor-arg ref="requestFactory"/>
         <property name="messageConverters">
