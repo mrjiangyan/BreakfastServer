@@ -1,5 +1,7 @@
 package com.beyondh.breakfast.utils;
 
+import com.beyondh.breakfast.network.Model.HotelBreakfastSummaryModel;
+import com.beyondh.breakfast.network.Model.PmsResultModel;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -44,7 +46,6 @@ public class JsonUtils {
     /**
      * 将JSON字符串反序列化为对象
      *
-     * @param object
      * @return JSON字符串
      */
     public static <T> T Deserialize(String json, Class<T> clazz) {
@@ -64,7 +65,6 @@ public class JsonUtils {
     /**
      * 将JSON字符串反序列化为对象
      *
-     * @param object
      * @return JSON字符串
      */
     public static <T> T Deserialize(String json, TypeReference<T> typeRef) {
@@ -78,5 +78,12 @@ public class JsonUtils {
             logger.error("IOException when deserialize json", e);
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        String json="{\"Code\":0,\"Message\":\"\",\"FullMessage\":\"\",\"Content\":{\"BreakfastTotalCount\":25,\"BreakfastUseCount\":0,\"TotalAvailableBreakfastCount\":1}}";
+        PmsResultModel summaryModelPmsResultModel=JsonUtils.Deserialize(json,PmsResultModel.class);
+
+        System.out.println(summaryModelPmsResultModel);
     }
 }

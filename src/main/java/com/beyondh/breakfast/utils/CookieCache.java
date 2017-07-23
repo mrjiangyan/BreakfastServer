@@ -14,6 +14,9 @@ public class CookieCache {
     private static Map<String, String> concurrentHashMap = new ConcurrentHashMap<String, String>();
 
     public static void Save(User user, String value) {
+        System.out.println("old Cookie:"+value);
+        value=value.replaceAll(" path=/; HttpOnly","");
+        System.out.println("New Cookie:"+value);
         String key = getKey(user);
         concurrentHashMap.put(key, value);
     }
