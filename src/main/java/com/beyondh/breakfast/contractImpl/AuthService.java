@@ -9,12 +9,14 @@ import com.beyondh.breakfast.utils.StringUtils;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 
 /**
  * Created by jliang on 7/24/2017.
  */
+@Service
 public class AuthService implements IAuthService {
 
     @Autowired
