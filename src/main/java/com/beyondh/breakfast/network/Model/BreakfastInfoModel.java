@@ -1,4 +1,4 @@
-package com.beyondh.breakfast.model;
+package com.beyondh.breakfast.network.Model;
 
 import java.io.Serializable;
 
