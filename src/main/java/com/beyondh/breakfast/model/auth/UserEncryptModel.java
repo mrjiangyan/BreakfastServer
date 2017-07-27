@@ -1,7 +1,7 @@
 package com.beyondh.breakfast.model.auth;
 
+
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by jliang on 7/17/2017.
@@ -16,7 +16,7 @@ public class UserEncryptModel implements Serializable{
     private String ownerName;
     private String shift;
     private String businessDate;
-
+    private String employeeName;
 
     public String getSessionId() {
         return sessionId;
@@ -82,4 +82,11 @@ public class UserEncryptModel implements Serializable{
         this.businessDate = businessDate;
     }
 
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
 }

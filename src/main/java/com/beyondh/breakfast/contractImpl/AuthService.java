@@ -45,6 +45,7 @@ public class AuthService implements IAuthService {
             userEncryptModel.setOwnerName(content.get("OwnerName").toString());
             LinkedHashMap<String, Object> currentUser = (LinkedHashMap<String, Object>) content.get("CurrentUser");
             userEncryptModel.setBusinessDate(currentUser.get("BusinessDate").toString());
+            userEncryptModel.setEmployeeName(currentUser.get("EmployeeName").toString());
 
             String cookie = StringUtils.ToString(jsonObjectResponseEntity.getHeaders().get("Set-Cookie"));
 
