@@ -1,37 +1,54 @@
 package com.beyondh.breakfast.contractImpl;
 
-import com.beyondh.breakfast.contract.IAuthService;
-import com.beyondh.breakfast.model.auth.User;
+import com.beyondh.breakfast.contract.IOrgService;
+import com.beyondh.breakfast.interceptor.RequestCallContext;
 import com.beyondh.breakfast.model.auth.UserModel;
+import com.beyondh.breakfast.network.Model.HotelBreakfastSummaryModel;
+import com.beyondh.breakfast.network.Model.OrgInfoModel;
+import com.beyondh.breakfast.network.Model.PmsResultModel;
 import com.beyondh.breakfast.network.PmsRestClient;
 import com.beyondh.breakfast.utils.CookieCache;
+import com.beyondh.breakfast.utils.JsonUtils;
 import com.beyondh.breakfast.utils.StringUtils;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 
 /**
- * Created by jliang on 7/24/2017.
+ * Created by jliang on 7/31/2017.
  */
 @Service
-public class AuthService implements IAuthService {
+public class OrgService implements IOrgService {
 
     @Autowired
     private PmsRestClient pmsRestClient;
 
+    @Autowired
+    private RequestCallContext requestCallContext;
+
     @Override
-    public UserModel Login(User user) {
-        ValidateUser(user);
+    public OrgInfoModel[] GetAvailiableOrgsByUser() {
+        ParameterizedTypeReference<PmsResultModel<String>> typeRef = new ParameterizedTypeReference<PmsResultModel<String>>() { };
+        PmsResultModel<String> result = pmsRestClient.GetClient().exchange(requestCallContext.GetUser().getUrl()+"/API/Configure/GetAvailiableOrgsByUser", HttpMethod.GET, null,typeRef).getBody();
+        if (result.getCode() != 0) {
+            throw new IllegalArgumentException(result.getMessage());
+        }
+
+        return JsonUtils.Deserialize(result.getContent(),OrgInfoModel[].class);
+    }
+
+    @Override
+    public UserModel ChangeOrg() {
         UserModel userModel = new UserModel();
 
         JSONObject postData = new JSONObject();
-        postData.put("ID", user.getUserName());
-        postData.put("Password", user.getPassword());
-        postData.put("Shift", StringUtils.isBlank(user.getShift()) ? "0" : user.getShift());
-        ResponseEntity<JSONObject> jsonObjectResponseEntity = pmsRestClient.GetClient().postForEntity(user.getUrl() + "/Home/Login", postData, JSONObject.class);
+        postData.put("OrgId", requestCallContext.GetUser().getOrgId());
+        ResponseEntity<JSONObject> jsonObjectResponseEntity = pmsRestClient.GetClient().postForEntity(requestCallContext.GetUser().getUrl() + "/Home/ChangeOrg", postData, JSONObject.class);
         JSONObject body = jsonObjectResponseEntity.getBody();
 
         if (Integer.parseInt(jsonObjectResponseEntity.getBody().get("Code").toString()) == 0) {
@@ -47,27 +64,11 @@ public class AuthService implements IAuthService {
             userModel.setBusinessDate(currentUser.get("BusinessDate").toString());
             userModel.setEmployeeName(currentUser.get("EmployeeName").toString());
 
-            user.setOrgId(Long.parseLong(currentUser.get("ExtenalOrgId").toString()));
             String cookie = StringUtils.ToString(jsonObjectResponseEntity.getHeaders().get("Set-Cookie"));
 
-            CookieCache.Save(user, cookie);
+            CookieCache.Save(requestCallContext.GetUser(), cookie);
         }
 
         return userModel;
-    }
-
-    private void ValidateUser(User user) {
-        if (null == user) {
-            throw new IllegalArgumentException("user is illegal");
-        }
-        if (StringUtils.isEmpty(user.getUrl())) {
-            throw new IllegalArgumentException("url is illegal");
-        }
-        if (StringUtils.isEmpty(user.getUserName())) {
-            throw new IllegalArgumentException("username is illegal");
-        }
-        if (StringUtils.isEmpty(user.getPassword())) {
-            throw new IllegalArgumentException("password is illegal");
-        }
     }
 }

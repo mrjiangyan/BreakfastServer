@@ -1,7 +1,7 @@
 package com.beyondh.breakfast.contract;
 
 import com.beyondh.breakfast.model.auth.User;
-import com.beyondh.breakfast.model.auth.UserEncryptModel;
+import com.beyondh.breakfast.model.auth.UserModel;
 
 /**
  * Created by jliang on 7/24/2017.
@@ -12,5 +12,5 @@ public interface IAuthService {
      * @param user
      * @return
      */
-    UserEncryptModel Login(User user);
+    UserModel Login(User user);
 }

@@ -1,5 +1,7 @@
 package com.beyondh.breakfast.model.auth;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 /**
  * Created by jliang on 7/17/2017.
  */
@@ -11,6 +13,9 @@ public class User {
     private String shift;
 
     private String url;
+
+    @JsonIgnore
+    private long  orgId;
 
     public String getUserName() {
         return userName;
@@ -42,5 +47,13 @@ public class User {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(long orgId) {
+        this.orgId = orgId;
     }
 }

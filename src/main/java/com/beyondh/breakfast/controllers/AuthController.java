@@ -2,7 +2,7 @@ package com.beyondh.breakfast.controllers;
 
 import com.beyondh.breakfast.contract.IAuthService;
 import com.beyondh.breakfast.model.auth.User;
-import com.beyondh.breakfast.model.auth.UserEncryptModel;
+import com.beyondh.breakfast.model.auth.UserModel;
 import com.beyondh.breakfast.model.common.ApiResponse;
 import com.beyondh.breakfast.utils.TokenUtils;
 import com.beyondh.breakfast.utils.ExceptionUtils;
@@ -23,12 +23,12 @@ public class AuthController extends BaseController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public ApiResponse<UserEncryptModel> Login(@RequestBody User user, HttpServletResponse httpServletResponse) {
-        ApiResponse<UserEncryptModel> result = new ApiResponse<>();
-        UserEncryptModel userEncryptModel=null;
+    public ApiResponse<UserModel> Login(@RequestBody User user, HttpServletResponse httpServletResponse) {
+        ApiResponse<UserModel> result = new ApiResponse<>();
+        UserModel userModel =null;
         try {
-            userEncryptModel = authService.Login(user);
-            result.setData(userEncryptModel);
+            userModel = authService.Login(user);
+            result.setData(userModel);
             httpServletResponse.addHeader("LoginId", TokenUtils.AES(user));
         } catch (Exception exception) {
             return ExceptionUtils.HandleException(exception,result);

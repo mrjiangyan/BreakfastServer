@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * Created by jliang on 7/17/2017.
  */
-public class UserEncryptModel implements Serializable{
+public class UserModel implements Serializable{
 
     private String sessionId;
     private String ownerId;

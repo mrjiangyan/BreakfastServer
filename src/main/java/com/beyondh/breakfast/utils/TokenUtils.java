@@ -9,7 +9,7 @@ public class TokenUtils {
     private static final String ENCRYKEY="eifj123opejfo678efoeljo";
 
     public static String AES(User user) throws Exception{
-        String content=user.getUserName()+"&"+user.getUrl();
+        String content=user.getUserName()+"&"+user.getUrl()+"&"+user.getOrgId();
         return EncodeUtils.aesEncrypt(content,ENCRYKEY);
     }
 
@@ -20,6 +20,7 @@ public class TokenUtils {
         User user = new User();
         user.setUserName(userInfos[0]);
         user.setUrl(userInfos[1]);
+        user.setOrgId(Long.parseLong(userInfos[2]));
 
         return user;
     }
